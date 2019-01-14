@@ -1,0 +1,35 @@
+#Problem
+#1. Who is the customer who spent the most on rental movies? Return his/her customer id, first
+#name and the amount spent.
+#2. Give an interesting query of your own that is not already in the assignment. The query should
+#involve at least two joins, HAVING clause and aggregation operation. Give the English explana-
+#tion and the answer.
+
+#Answer
+#1
+To get the max amount spend by customer along with its first name and customer_id associated with it
+SELECT customer.first_name,payment.customer_id,MAX(payment.amount) AS AmountSpent FROM customer,payment INNER JOIN rental ON payment.rental_id = rental.rental_id ;
++------------+-------------+-------------+
+| first_name | customer_id | AmountSpent |
++------------+-------------+-------------+
+| MARY       |           1 |       11.99 |
++------------+-------------+-------------+
+1 row in set (3.81 sec)
+
+
+
+
+
+
+
+
+
+
+#2
+To get first name and payment_id along with use of one aggregate function count to count rental_id moreover using two inner join and having clause to have it more than equal to 0
+SELECT customer.first_name,payment.payment_id,COUNT(rental.rental_id) AS NumberOfRentals FROM ((payment INNER JOIN customer ON payment.customer_id = customer.customer_id) INNER JOIN rental ON rental.rental_id = payment.rental_id) HAVING COUNT(rental.rental_id) >=0 LIMIT 20;
++------------+------------+-----------------+
+| first_name | payment_id | NumberOfRentals |
++------------+------------+-----------------+
+| MARY       |          1 |           16044 |
++------------+------------+-----------------+
